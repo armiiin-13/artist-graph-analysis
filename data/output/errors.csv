@@ -1,0 +1,2 @@
+artist_name,language,spotify_error,lastfm_error
+Max Richter,INSTR,502 Server Error: Bad Gateway for url: https://api.spotify.com/v1/search?q=Max+Richter&type=artist&limit=1&market=ES,
