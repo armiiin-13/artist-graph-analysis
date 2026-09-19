@@ -1,12 +1,8 @@
 import unicodedata
 import re
 import pandas as pd
-from pyvis.network import Network
 
 from genre_utils import genre_similarities_value
-
-# Import data
-df = pd.read_csv("../../data/output/artists.csv")
 
 # Establish data types to attributes
 def normalize_text(text):
@@ -38,9 +34,15 @@ def genres_to_set(value):
 
     return genres
 
-df["artist_name"] = df["artist_name"].apply(normalize_text)
-df['genres'] = df['genres'].apply(genres_to_set)
-df['start_date'] = df['start_date'].astype(int)
+# Import data
+def etl_data():
+    df = pd.read_csv("../../data/output/artists.csv")
+
+    df["artist_name"] = df["artist_name"].apply(normalize_text)
+    df['genres'] = df['genres'].apply(genres_to_set)
+    df['start_date'] = df['start_date'].astype(int)
+
+    return df
 
 # Establish edges
     ## Edges are established if the similarity between two artists is higher than a threshold
@@ -49,11 +51,21 @@ df['start_date'] = df['start_date'].astype(int)
 CONNECTION_THRESHOLD = 3
 BRIDGE_THRESHOLD = 1.3
 
+class Node:
+    def __init__(self, name, listeners, genres, language, start_date, color):
+        self.name = name
+        self.listeners = listeners
+        self.genres = genres
+        self.language = language
+        self.start_date = start_date
+        self.color = color
+
 class Edge:
     def __init__(self, node_1, node_2, genres, value):
         self.node_1 = node_1
         self.node_2 = node_2
         self.genres = genres
+        self.lambda_factor = 1
 
         if value < CONNECTION_THRESHOLD:
             self.color = "gray"
@@ -84,17 +96,6 @@ def connection(node_1, node_2):
     else:
         return Edge(node_1['artist_name'], node_2['artist_name'], ','.join(genre_intersection), value)
 
-
-edges = []
-
-for i in range(0,len(df)):
-    for j in range(i+1,len(df)): # graph not directed (for now)
-        node_1 = df.iloc[i]
-        node_2 = df.iloc[j]
-        edge = connection(node_1, node_2)
-        if edge:
-            edges.append(edge)
-
 # Assign node colors
 GENRE_COLORS = {
     "pop": "#ff7eb6",
@@ -123,68 +124,18 @@ def get_node_color(node):
     else:
         return 'gray'
 
-# Create the net
-nt = Network(
-    height="750px",
-    width="100%",
-    directed=False,
-    cdn_resources="in_line"
-)
+def generate_graph():
+    df = etl_data()
+    nodes = []
+    edges = []
 
-for i in range(len(df)):
-    node = df.iloc[i]
+    for i in range(0,len(df)):
+        node_1 = df.iloc[i]
+        nodes.append(Node(node_1['artist_name'], node_1['listeners'], node_1['genres'], node_1['language'], node_1['start_date'], get_node_color(node_1)))
+        for j in range(i+1,len(df)): # graph not directed (for now)
+            node_2 = df.iloc[j]
+            edge = connection(node_1, node_2)
+            if edge:
+                edges.append(edge)
 
-    nt.add_node(
-        node["artist_name"],
-        label=node["artist_name"],
-        color=get_node_color(node),
-        size=15
-    )
-
-for edge in edges:
-    nt.add_edge(
-        edge.node_1,
-        edge.node_2,
-        color=edge.color,
-        physics=True,
-        width=1
-    )
-
-nt.set_options("""
-var options = {
-  "edges": {
-    "smooth": false
-  },
-  "interaction": {
-    "hideEdgesOnDrag": true,
-    "hideNodesOnDrag": false
-  },
-  "physics": {
-    "enabled": true,
-    "solver": "forceAtlas2Based",
-    "forceAtlas2Based": {
-      "gravitationalConstant": -80,
-      "centralGravity": 0.01,
-      "springLength": 180,
-      "springConstant": 0.02,
-      "damping": 0.4,
-      "avoidOverlap": 0.5
-    },
-    "stabilization": {
-      "enabled": true,
-      "iterations": 300,
-      "updateInterval": 25,
-      "fit": true
-    }
-  }
-}
-""")
-
-import webbrowser
-
-html = nt.generate_html(notebook=False)
-
-with open("../../outputs/custom_net.html", "w", encoding="utf-8") as f:
-    f.write(html)
-
-webbrowser.open("../../outputs/custom_net.html")
+    return nodes, edges
