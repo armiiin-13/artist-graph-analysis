@@ -184,12 +184,7 @@ def genre_similarities_value(genres_a, genres_b):
     union = len(supergenres_a | supergenres_b)
 
     jaccard = shared / union
-    shared_bonus = 0.5 * shared
 
-    genre_score = jaccard + shared_bonus
-
-    # SubGenre Similarity
-    intersection_set = genres_a.intersection(genres_b)
-    genre_score += 0.5 * len(intersection_set)
+    genre_score = jaccard + len(genres_a & genres_b)
 
     return round(genre_score, 1)

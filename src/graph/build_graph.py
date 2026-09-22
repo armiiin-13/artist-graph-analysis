@@ -2,7 +2,8 @@ import unicodedata
 import re
 import pandas as pd
 
-from genre_utils import genre_similarities_value
+from src.graph.genre_utils import genre_similarities_value
+
 
 # Establish data types to attributes
 def normalize_text(text):
@@ -36,7 +37,7 @@ def genres_to_set(value):
 
 # Import data
 def etl_data():
-    df = pd.read_csv("../../data/output/artists.csv")
+    df = pd.read_csv("../data/output/artists.csv")
 
     df["artist_name"] = df["artist_name"].apply(normalize_text)
     df['genres'] = df['genres'].apply(genres_to_set)
@@ -48,8 +49,8 @@ def etl_data():
     ## Edges are established if the similarity between two artists is higher than a threshold
     ## The edge label shows the shared genres between both artists
 
-CONNECTION_THRESHOLD = 3
-BRIDGE_THRESHOLD = 1.3
+BRIDGE_THRESHOLD = 3
+CONNECTION_THRESHOLD = 2
 
 class Node:
     def __init__(self, name, listeners, genres, language, start_date, color):
@@ -67,7 +68,7 @@ class Edge:
         self.genres = genres
         self.lambda_factor = 1
 
-        if value < CONNECTION_THRESHOLD:
+        if value < BRIDGE_THRESHOLD:
             self.color = "gray"
         else:
             self.color = "red"
@@ -78,7 +79,7 @@ def connection(node_1, node_2):
     genre_score = genre_similarities_value(node_1['genres'], node_2['genres'])
     value = genre_score
 
-    with open("../../data/output/genre_similarity", "a", encoding="utf-8") as file:
+    with open("../data/output/genre_similarity", "a", encoding="utf-8") as file:
         file.write(str(node_1['artist_name']) + ", " + str(node_2['artist_name']) + " -> " + str(value) + "\n")
 
     if value != 0:
@@ -91,7 +92,7 @@ def connection(node_1, node_2):
         if abs(time_gap) <= 5:
             value += 0.5
 
-    if genre_score < BRIDGE_THRESHOLD: # genre_score always will be <= value
+    if value < CONNECTION_THRESHOLD:
         return None
     else:
         return Edge(node_1['artist_name'], node_2['artist_name'], ','.join(genre_intersection), value)
@@ -132,7 +133,7 @@ def generate_graph():
     for i in range(0,len(df)):
         node_1 = df.iloc[i]
         nodes.append(Node(node_1['artist_name'], node_1['listeners'], node_1['genres'], node_1['language'], node_1['start_date'], get_node_color(node_1)))
-        for j in range(i+1,len(df)): # graph not directed (for now)
+        for j in range(i+1,len(df)): # graph not directed
             node_2 = df.iloc[j]
             edge = connection(node_1, node_2)
             if edge:
