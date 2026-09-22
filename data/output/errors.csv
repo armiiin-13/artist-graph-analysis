@@ -1,2 +1,101 @@
 artist_name,language,spotify_error,lastfm_error
-Max Richter,INSTR,502 Server Error: Bad Gateway for url: https://api.spotify.com/v1/search?q=Max+Richter&type=artist&limit=1&market=ES,
+Taylor Swift,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Sabrina Carpenter,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Halsey,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Ariana Grande,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Tate McRae,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Rosalia,ESP,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Bad Bunny,ESP,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Quevedo,ESP,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Selena Gomez,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Britney Spears,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Christina Aguilera,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Aitana,ESP,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Lola Indigo,ESP,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Michael Jackson,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Prince,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+George Michael,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Cher,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Lady Gaga,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Shakira,ESP,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+JLo,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Pitbull,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Dua Lipa,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Olivia Rodrigo,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+AC/DC,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Aerosmith,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Bon Jovi,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Adele,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Alanis Morissette,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Katy Perry,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Avril Lavigne,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Backstreet Boys,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+The Beatles,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Beyonce,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Bruce Springsteen,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Bruno Mars,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Chappell Roan,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Coldplay,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+BTS,KOR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+BLACKPINK,KOR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+IU,KOR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Epik High,KOR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+HYUKOH,KOR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Stromae,FRA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Aya Nakamura,FRA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Orelsan,FRA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+L'Impératrice,FRA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Daft Punk,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Måneskin,ITA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Mahmood,ITA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Laura Pausini,ITA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Elisa,ITA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Lazza,ITA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Mina,ITA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Caparezza,ITA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Ludovico Einaudi,INSTR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Explosions in the Sky,INSTR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Nujabes,INSTR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Max Richter,INSTR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Ólafur Arnalds,INSTR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Bonobo,INSTR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Godspeed You! Black Emperor,INSTR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Aphex Twin,INSTR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Elvis Presley,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Demi Lovato,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Eagles,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Ed Sheeran,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Eros Ramazzotti,ITA,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Gracie Abrams,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Lana del Rey,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Madonna,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Whitney Houston,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Rihanna,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Miley Cyrus,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+The Weeknd,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Karol G,ESP,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Maná,ESP,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Kelly Clarkson,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Dolly Parton,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Johnny Cash,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Shania Twain,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Kacey Musgraves,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Tim McGraw,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Metallica,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Green Day,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Ramones,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Bob Dylan,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Joni Mitchell,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Aretha Franklin,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Stevie Wonder,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Frank Ocean,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Kendrick Lamar,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Eminem,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Miles Davis,INSTR,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Ella Fitzgerald,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Nina Simone,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Bob Marley,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Kraftwerk,GER,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Peter Tosh,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Jimmy Cliff,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
+Toots & The Maytals,ENG,,No existe ../../data/input/allowed_tags. Crea el archivo con los tags permitidos.
