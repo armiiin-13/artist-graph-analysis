@@ -10,7 +10,7 @@ load_dotenv() # reads the .env file
 LASTFM_API_KEY = os.getenv("LASTFM_API_KEY")
 BASE_URL = "https://ws.audioscrobbler.com/2.0/"
 
-ALLOWED_TAGS_FILE = "../../data/input/allowed_tags"
+ALLOWED_TAGS_FILE = "../data/input/allowed_tags"
 
 class LastFMError(Exception):
     pass
@@ -91,28 +91,21 @@ def get_artist_top_tags(artist_name, limit=10):
 
     allowed_tags = load_allowed_tags()
 
-    clean_tags = []
+    return filter_tags(allowed_tags, tags)
 
+
+def filter_tags(allowed_tags, tags):
+    clean_tags = set()
     for tag in tags:
         name = tag.get("name")
 
-        if not name:
-            continue
-
-        name = normalize_tag(name)
-
-        if name not in allowed_tags:
-            continue
-
-        if name in clean_tags:
-            continue
-
-        clean_tags.append(name)
-
-        if len(clean_tags) >= limit:
-            break
+        if name:
+            name = normalize_tag(name)
+            if name in allowed_tags:
+                clean_tags.add(name)
 
     return clean_tags
+
 
 # Search complete artist
 def get_lastfm_artist(artist_name):

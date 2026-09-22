@@ -2,47 +2,54 @@ from src.graph.build_graph import generate_graph, Node, Edge
 import networkx as nx
 import pandas as pd
 
-nodes, edges = generate_graph()
-G = nx.Graph()
+CENTRALITY_PATH = '../outputs/centrality.xlsx'
+BETWEENEESS_PATH = '../outputs/betweenness.xlsx'
+CLOSENESS_PATH = '../outputs/closeness.xlsx'
+EIGENVECTOR_PATH = '../outputs/eigenvector.xlsx'
+STRENGTH_PATH = '../outputs/strength.xlsx'
 
-# Add nodes
-for node in nodes:
-    G.add_node(node.name, color=node.color)
+def networkx_graph():
+    nodes, edges = generate_graph()
+    G = nx.Graph()
 
-for edge in edges:
-    G.add_edge(edge.node_1, edge.node_2, color=edge.color)
+    # Add nodes
+    for node in nodes:
+        G.add_node(node.name, color=node.color)
 
-# Centrality
-centrality = nx.degree_centrality(G)
+    for edge in edges:
+        G.add_edge(edge.node_1, edge.node_2, color=edge.color)
 
-df = pd.DataFrame(data=centrality, index=[0])
-df = df.T
-df.to_excel('../../outputs/centrality.xlsx')
+    return G
 
-# Betweenness edges value
-betweenness = nx.betweenness_centrality(G, weight='lambda_factor')
+def export_xlsx(data, path):
+    df = pd.DataFrame(data=data, index=[0])
+    df = df.T
+    df.to_excel(path)
 
-df = pd.DataFrame(data=betweenness, index=[0])
-df = df.T
-df.to_excel('../../outputs/betweenness.xlsx')
+def centrality(graph):
+    centrality = nx.degree_centrality(graph)
+    export_xlsx(centrality, CENTRALITY_PATH)
 
-# Closeness
-closeness = nx.closeness_centrality(G, distance='lambda_factor')
+def betweenness(graph):
+    betweenness = nx.betweenness_centrality(graph, weight='lambda_factor')
+    export_xlsx(betweenness, BETWEENEESS_PATH)
 
-df = pd.DataFrame(data=closeness, index=[0])
-df = df.T
-df.to_excel('../../outputs/closeness.xlsx')
+def closeness(graph):
+    closeness = nx.closeness_centrality(graph, distance='lambda_factor')
+    export_xlsx(closeness, CLOSENESS_PATH)
 
-# Eigenvector
-eigenvector = nx.eigenvector_centrality(G, weight='lambda_factor')
+def eigenvector(graph):
+    eigenvector = nx.eigenvector_centrality(graph, weight='lambda_factor')
+    export_xlsx(eigenvector, EIGENVECTOR_PATH)
 
-df = pd.DataFrame(data=eigenvector, index=[0])
-df = df.T
-df.to_excel('../../outputs/eigenvector.xlsx')
+def strength(graph):
+    strength = dict(graph.degree(weight="weight"))
+    export_xlsx(strength, STRENGTH_PATH)
 
-# Strength
-strength = dict(G.degree(weight="weight"))
-
-df = pd.DataFrame(data=strength, index=[0])
-df = df.T
-df.to_excel('../../outputs/strength.xlsx')
+def export_graph_measures():
+    graph = networkx_graph()
+    centrality(graph)
+    betweenness(graph)
+    eigenvector(graph)
+    closeness(graph)
+    strength(graph)
