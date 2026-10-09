@@ -1,9 +1,6 @@
 import os
 import requests
-import re
-import unicodedata
 from dotenv import load_dotenv
-from pathlib import Path
 
 load_dotenv() # reads the .env file
 
@@ -15,7 +12,6 @@ ALLOWED_TAGS_FILE = "../data/input/allowed_tags"
 class LastFMError(Exception):
     pass
 
-# Method to do requests to the API
 def lastfm_get(params):
     if not LASTFM_API_KEY:
         raise LastFMError("LASTFM_API_KEY not found on the .env file")
@@ -41,42 +37,6 @@ def lastfm_get(params):
 
     return data
 
-# Establish tags
-def normalize_tag(tag):
-    tag = tag.lower().strip()
-
-    tag = unicodedata.normalize("NFKD", tag)
-    tag = "".join(c for c in tag if not unicodedata.combining(c))
-
-    tag = re.sub(r"\s+", " ", tag)
-
-    return tag
-
-
-def load_allowed_tags(filepath=ALLOWED_TAGS_FILE):
-    allowed_tags = set()
-
-    path = Path(filepath)
-
-    if not path.exists():
-        raise FileNotFoundError(
-            f"No existe {filepath}. Crea el archivo con los tags permitidos."
-        )
-
-    with open(path, "r", encoding="utf-8") as file:
-        for line in file:
-            tag = line.strip()
-
-            if not tag:
-                continue
-
-            if tag.startswith("#"):
-                continue
-
-            allowed_tags.add(normalize_tag(tag))
-
-    return allowed_tags
-
 def get_artist_top_tags(artist_name, limit=10):
     data = lastfm_get({
         "method": "artist.getTopTags",
@@ -89,25 +49,12 @@ def get_artist_top_tags(artist_name, limit=10):
     if isinstance(tags, dict):
         tags = [tags]
 
-    allowed_tags = load_allowed_tags()
+    return [
+        tag["name"]
+        for tag in tags[:limit]
+        if tag.get("name")
+    ]
 
-    return filter_tags(allowed_tags, tags)
-
-
-def filter_tags(allowed_tags, tags):
-    clean_tags = set()
-    for tag in tags:
-        name = tag.get("name")
-
-        if name:
-            name = normalize_tag(name)
-            if name in allowed_tags:
-                clean_tags.add(name)
-
-    return clean_tags
-
-
-# Search complete artist
 def get_lastfm_artist(artist_name):
     info_data = lastfm_get({
         "method": "artist.getInfo",

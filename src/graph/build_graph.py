@@ -41,7 +41,7 @@ def etl_data():
 
     df["artist_name"] = df["artist_name"].apply(normalize_text)
     df['genres'] = df['genres'].apply(genres_to_set)
-    df['start_date'] = df['start_date'].astype(int)
+    df['min_date'] = df['min_date'].astype(int)
 
     return df
 
@@ -53,12 +53,12 @@ BRIDGE_THRESHOLD = 3
 CONNECTION_THRESHOLD = 2
 
 class Node:
-    def __init__(self, name, listeners, genres, language, start_date, color):
+    def __init__(self, name, listeners, genres, language, min_date, color):
         self.name = name
         self.listeners = listeners
         self.genres = genres
         self.language = language
-        self.start_date = start_date
+        self.min_date = min_date
         self.color = color
 
 class Edge:
@@ -88,7 +88,7 @@ def connection(node_1, node_2):
         value += 0.5 if equal_language else 0
 
         # Time Similarity
-        time_gap = node_1['start_date'] - node_2['start_date']
+        time_gap = node_1['min_date'] - node_2['min_date']
         if abs(time_gap) <= 5:
             value += 0.5
 
@@ -132,7 +132,7 @@ def generate_graph():
 
     for i in range(0,len(df)):
         node_1 = df.iloc[i]
-        nodes.append(Node(node_1['artist_name'], node_1['listeners'], node_1['genres'], node_1['language'], node_1['start_date'], get_node_color(node_1)))
+        nodes.append(Node(node_1['artist_name'], node_1['listeners'], node_1['genres'], node_1['language'], node_1['min_date'], get_node_color(node_1)))
         for j in range(i+1,len(df)): # graph not directed
             node_2 = df.iloc[j]
             edge = connection(node_1, node_2)

@@ -167,8 +167,10 @@ genre_map = {
     "oriental pop": ["pop", "traditional"],
     "traditional": ["traditional", "folk"],
     "ethnic": ["traditional", "folk"],
-    "soundtrack": ["soundtrack", "instrumental"],
 }
+
+def get_macrogenres(genre):
+    return genre_map[genre]
 
 def genre_similarities_value(genres_a, genres_b):
     # SuperGenre Similarity

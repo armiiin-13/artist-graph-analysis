@@ -4,24 +4,30 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.api.spotify_api import get_spotify_artist
+from src.api.applemusic_api import get_artist_data
+from src.api.itunes_api import get_itunes_genres
 from src.api.lastfm_api import get_lastfm_artist
 from src.data.combine_data import combine_artist_data
+
 
 INPUT_FILE = "../data/input/search_data"
 OUTPUT_FILE = "../data/output/artists.csv"
 ERRORS_FILE = "../data/output/errors.csv"
 
+
 FINAL_COLUMNS = [
-    "id_spoti",
+    "id_apple",
     "id_lastfm",
     "artist_name",
     "listeners",
-    "popularity",
     "genres",
-    "start_date",
+    "min_date",
+    "max_date",
+    "min_golden_date",
+    "max_golden_date",
     "language",
 ]
+
 
 def read_artists_txt(filepath):
     artists = []
@@ -39,15 +45,14 @@ def read_artists_txt(filepath):
                 continue
 
             language = row[1].strip() if len(row) > 1 else None
-            start_date = row[2].strip() if len(row) > 2 else None
 
             artists.append({
                 "artist_name": artist_name,
-                "start_date": start_date,
                 "language": language,
             })
 
     return artists
+
 
 def export():
     Path("../data/output").mkdir(exist_ok=True)
@@ -62,53 +67,77 @@ def export():
 
         print(f"[{index}/{len(artists)}] Processing: {artist_name}")
 
-        spotify_data = {}
+        apple_data = {}
+        itunes_genres = set()
         lastfm_data = {}
 
-        spotify_error = None
+        apple_error = None
+        itunes_error = None
         lastfm_error = None
 
         try:
-            spotify_data = get_spotify_artist(artist_name)
+            apple_data = get_artist_data(artist_name)
         except Exception as e:
-            spotify_error = str(e)
-            spotify_data = {
-                "id_spoti": None,
-                "artist_name_spotify": None,
+            apple_error = str(e)
+
+            apple_data = {
+                "artist_id": None,
+                "artist_name_apple": None,
+                "dates": set(),
+                "golden_dates": set(),
             }
+
+        try:
+            itunes_genres = get_itunes_genres(apple_data["artist_id"])
+        except Exception as e:
+            itunes_error = str(e)
+            itunes_genres = set()
 
         try:
             lastfm_data = get_lastfm_artist(artist_name)
         except Exception as e:
             lastfm_error = str(e)
+
             lastfm_data = {
                 "id_lastfm": None,
                 "artist_name_lastfm": None,
                 "listeners": None,
-                "popularity": None,
-                "start_date": None,
                 "tags": [],
             }
 
         final_row = combine_artist_data(
-            spotify_data=spotify_data,
+            apple_data=apple_data,
+            itunes_genres=itunes_genres,
             lastfm_data=lastfm_data,
             artist_input=artist_input,
         )
 
         final_rows.append(final_row)
 
-        if spotify_error or lastfm_error:
+        if apple_error or itunes_error or lastfm_error:
             error_rows.append({
                 "artist_name": artist_name,
                 "language": artist_input.get("language"),
-                "spotify_error": spotify_error,
+                "apple_error": apple_error,
+                "itunes_error": itunes_error,
                 "lastfm_error": lastfm_error,
             })
 
         time.sleep(0.3)
 
-    df = pd.DataFrame(final_rows, columns=FINAL_COLUMNS)
+    df = pd.DataFrame(
+        final_rows,
+        columns=FINAL_COLUMNS
+    )
+
+    date_columns = [
+        "min_date",
+        "max_date",
+        "min_golden_date",
+        "max_golden_date",
+    ]
+
+    df[date_columns] = df[date_columns].astype("Int64")
 
     df.to_csv(
         OUTPUT_FILE,
@@ -120,11 +149,9 @@ def export():
 
     if error_rows:
         errors_df = pd.DataFrame(error_rows)
-
         errors_df.to_csv(
             ERRORS_FILE,
             index=False,
             encoding="utf-8"
         )
-
-        print(f"Some artist gave errors. Check: {ERRORS_FILE}")
+        print(f"Some artists gave errors. Check: {ERRORS_FILE}")
