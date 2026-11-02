@@ -2,7 +2,7 @@ id_apple,id_lastfm,artist_name,listeners,genres,min_date,max_date,min_golden_dat
 159260351,20244d07-534f-4eff-b4d4-930878889970,Taylor Swift,6134167,"alternative, country, country pop, dance, pop",2006,2026,2008,2020,ENG
 390647681,1882fe91-cdd9-49c9-9956-8e06a3810bd4,Sabrina Carpenter,3418884,"dance, electropop, pop",2015,2025,2024,2024,ENG
 324916925,3377f3bb-60fc-4403-aea9-7e800612e060,Halsey,2989462,"alternative, country, dance, electropop, indie, indie pop, pop, pop rock, synthpop",2015,2026,2015,2015,ENG
-412778295,f4fdbb4c-e4b7-47a0-b83b-d91bbfcfa387,Ariana Grande,4715726,"dance, dance-pop, jazz, pop",2013,2026,2018,2018,ENG
+412778295,f4fdbb4c-e4b7-47a0-b83b-d91bbfcfa387,Ariana Grande,4715726,"dance, dance-pop, jazz, pop",2013,2026,2016,2019,ENG
 1446365464,f9133869-f87c-459c-9aa7-2f176cda7e06,Tate McRae,2392554,"dance, electropop, pop",2021,2025,,,ENG
 313845115,2ffc92fa-e51e-45ed-8a90-fa494aab50de,Rosalia,11353,"alternative, alternative rock, electronic, house, latin pop",2017,2026,2018,2022,ESP
 1126808565,89aa5ecb-59ad-46f5-b3eb-2d424e941f19,Bad Bunny,2748720,"dance, latin, latin pop, latin rap, pop rap, rap, reggaeton, trap, trap latino",2018,2025,2019,2022,ESP
@@ -19,14 +19,14 @@ id_apple,id_lastfm,artist_name,listeners,genres,min_date,max_date,min_golden_dat
 277293880,650e7db6-b795-4eb5-a702-5ea2fc46c848,Lady Gaga,7952598,"dance, electropop, jazz, pop, rock, vocal jazz",2008,2026,2008,2011,ENG
 889327,bf24ca37-25f4-4e34-9aec-460b94364cfc,Shakira,5097023,"alternative rock, dance, latin, latin pop, pop",1995,2025,1995,2005,ESP
 463009,f0602f55-1770-483d-89bd-4bae0d0ac086,Jennifer Lopez,4000995,"dance, house, latin, latin pop, pop",1999,2026,1999,2026,ENG
-27044968,d262ea27-3ffe-40f7-b922-85c42d625e67,Pitbull,4608311,"country, dance, latin, latin pop, latin rap, pop, reggae, reggaeton",2004,2026,,,ENG
+27044968,d262ea27-3ffe-40f7-b922-85c42d625e67,Pitbull,4608311,"country, dance, latin, latin pop, latin rap, pop, reggae, reggaeton",2004,2026,2011,2012,ENG
 1031397873,6f1a58bf-9b1b-49cf-a44a-6cefad7ae04f,Dua Lipa,3447186,"country, dance, dance pop, dance-pop, disco, electropop, latin, nu-disco, pop, reggae, synthpop",2017,2024,2020,2020,ENG
 979458609,6925db17-f35e-42f3-a4eb-84ee6bf5d4b0,Olivia Rodrigo,3383647,"alt-pop, indie pop, pop, pop punk, pop rock, teen pop",2021,2026,2021,2021,ENG
 5040714,66c662b6-6e2f-4930-8610-912e24c63ed1,AC/DC,4687175,"hard rock, heavy metal, metal",1976,2020,1976,1980,ENG
 115386,3d2b98e5-556f-4451-a3ff-c50ea18d57cb,Aerosmith,4830982,"blues rock, classic rock, hard rock, rock",1974,2026,1974,1987,ENG
 122782,5dcdb5eb-cb72-4e6e-9e63-b7bace604965,Bon Jovi,4385370,"classic rock, country, dance, glam metal, glam rock, hair metal, hard rock, pop, rock",1984,2025,1986,1988,ENG
 262836961,cc2c9c3c-b7bc-4b8b-84d8-4fbd8779e493,Adele,5771715,pop,2008,2021,2011,2015,ENG
-1092859,4bdcee62-4902-4773-8cd1-e252e2e31225,Alanis Morissette,2899336,"alternative, alternative rock, country, dance, electronic, house, new age, pop, pop rock, post-grunge",1995,2026,1995,1995,ENG
+1092859,4bdcee62-4902-4773-8cd1-e252e2e31225,Alanis Morissette,2899336,"alternative, alternative rock, country, dance, electronic, house, pop, pop rock, post-grunge",1995,2026,1995,1995,ENG
 64387566,122d63fc-8671-43e4-9752-34e846d62a9c,Katy Perry,7415738,"dance, electropop, indie, latin, pop, pop rock",2008,2024,2010,2010,ENG
 459885,0103c1cc-4a09-4a5d-a344-56ad99a77193,Avril Lavigne,5305846,"alternative, alternative rock, country, dance, pop, pop punk, pop rock, punk, rock",2004,2022,2022,2022,ENG
 217039,2f569e60-0a1b-4fb9-95a4-3dc1525d1aad,Backstreet Boys,3167988,"country, dance, pop, pop rock, reggae",1996,2025,2025,2025,ENG

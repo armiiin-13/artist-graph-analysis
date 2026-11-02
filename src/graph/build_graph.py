@@ -2,7 +2,9 @@ import unicodedata
 import re
 import pandas as pd
 
-from src.graph.genre_utils import genre_similarities_value
+from src.graph.contribution_functions import qualitative_contribution, interval_contribution, jaccard_index, \
+    set_contribution
+from src.graph.genre_utils import get_macrogenres_for_set
 
 
 # Establish data types to attributes
@@ -42,6 +44,9 @@ def etl_data():
     df["artist_name"] = df["artist_name"].apply(normalize_text)
     df['genres'] = df['genres'].apply(genres_to_set)
     df['min_date'] = df['min_date'].astype(int)
+    df['max_date'] = df['max_date'].astype(int)
+    df['min_golden_date'] = df['min_golden_date'].fillna(0).astype(int)
+    df['max_golden_date'] = df['max_golden_date'].fillna(0).astype(int)
 
     return df
 
@@ -49,8 +54,10 @@ def etl_data():
     ## Edges are established if the similarity between two artists is higher than a threshold
     ## The edge label shows the shared genres between both artists
 
-BRIDGE_THRESHOLD = 3
-CONNECTION_THRESHOLD = 2
+BRIDGE_THRESHOLD = 3.5
+CONNECTION_THRESHOLD = 3.0
+MIN_CONNECTION_THRESHOLD = 2.3
+MIN_DEGREE = 5
 
 class Node:
     def __init__(self, name, listeners, genres, language, min_date, color):
@@ -67,35 +74,44 @@ class Edge:
         self.node_2 = node_2
         self.genres = genres
         self.lambda_factor = 1
+        self.weight = value
 
         if value < BRIDGE_THRESHOLD:
             self.color = "gray"
         else:
             self.color = "red"
 
-def connection(node_1, node_2):
+def connection(node_1, node_2, threshold=BRIDGE_THRESHOLD):
     # Genre Similarity
-    genre_intersection = node_1['genres'].intersection(node_2['genres'])
-    genre_score = genre_similarities_value(node_1['genres'], node_2['genres'])
-    value = genre_score
+    jaccard = jaccard_index(get_macrogenres_for_set(node_1['genres']), get_macrogenres_for_set(node_2['genres']))
+    genre_similarity = set_contribution(node_1['genres'], node_2['genres'])
 
     with open("../data/output/genre_similarity", "a", encoding="utf-8") as file:
-        file.write(str(node_1['artist_name']) + ", " + str(node_2['artist_name']) + " -> " + str(value) + "\n")
+        file.write(str(node_1['artist_name']) + ", " + str(node_2['artist_name']) + " -> " + str(jaccard + genre_similarity) + "\n")
 
-    if value != 0:
-        # Language Similarity
-        equal_language = node_1['language'] == node_2['language']
-        value += 0.5 if equal_language else 0
+    # Language Similarity
+    equal_language = qualitative_contribution(node_1['language'], node_2['language'])
 
-        # Time Similarity
-        time_gap = node_1['min_date'] - node_2['min_date']
-        if abs(time_gap) <= 5:
-            value += 0.5
+    # Time Similarity
+    time_gap = interval_contribution(node_1['min_date'], node_1['max_date'],
+                                     node_2['min_date'], node_2['max_date']) * 0.2
 
-    if value < CONNECTION_THRESHOLD:
+    # Golden Time Similarity
+    golden_time_gap = interval_contribution(node_1['min_golden_date'], node_1['max_golden_date'],
+                                            node_2['min_golden_date'], node_2['max_golden_date']) * 0.8
+
+    genre_score = jaccard + genre_similarity
+    delta = 1 if genre_score > 0 else 0
+    index_name = genre_score + delta * (equal_language + time_gap + golden_time_gap)
+
+    with open("../data/output/index_similarity", "a", encoding="utf-8") as file:
+        file.write(str(node_1['artist_name']) + ", " + str(node_2['artist_name']) + " -> " + str(round(index_name,1)) + "\n")
+
+    if index_name < threshold:
         return None
     else:
-        return Edge(node_1['artist_name'], node_2['artist_name'], ','.join(genre_intersection), value)
+        return Edge(node_1['artist_name'], node_2['artist_name'],
+                    ','.join(node_1['genres'].intersection(node_2['genres'])), round(index_name,1))
 
 # Assign node colors
 GENRE_COLORS = {
@@ -129,14 +145,42 @@ def generate_graph():
     df = etl_data()
     nodes = []
     edges = []
+    candidates = []
+    degree = {}
 
-    for i in range(0,len(df)):
-        node_1 = df.iloc[i]
-        nodes.append(Node(node_1['artist_name'], node_1['listeners'], node_1['genres'], node_1['language'], node_1['min_date'], get_node_color(node_1)))
-        for j in range(i+1,len(df)): # graph not directed
-            node_2 = df.iloc[j]
-            edge = connection(node_1, node_2)
-            if edge:
+    for i in range(len(df)):
+        artist = df.iloc[i]
+        name = artist["artist_name"]
+
+        nodes.append(Node(
+            name, artist["listeners"], artist["genres"],
+            artist["language"], artist["min_date"],
+            get_node_color(artist)
+        ))
+        degree[name] = 0
+
+    for i in range(len(df)):
+        for j in range(i + 1, len(df)):
+            edge = connection(df.iloc[i], df.iloc[j], threshold=MIN_CONNECTION_THRESHOLD)
+
+            if edge is None:
+                continue
+
+            if edge.weight >= CONNECTION_THRESHOLD:
                 edges.append(edge)
+                degree[edge.node_1] += 1
+                degree[edge.node_2] += 1
+            else:
+                candidates.append(edge)
+
+    candidates.sort(key=lambda e: e.weight, reverse=True)
+
+    for edge in candidates:
+        if (degree[edge.node_1] < MIN_DEGREE or
+                degree[edge.node_2] < MIN_DEGREE):
+
+            edges.append(edge)
+            degree[edge.node_1] += 1
+            degree[edge.node_2] += 1
 
     return nodes, edges

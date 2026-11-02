@@ -143,7 +143,6 @@ genre_map = {
     "neo-classical": ["classical"],
     "post-classical": ["classical", "experimental"],
     "minimalism": ["classical", "experimental"],
-    "new age": ["ambient", "instrumental"],
 
     # JAZZ
     "jazz": ["jazz"],
@@ -172,21 +171,8 @@ genre_map = {
 def get_macrogenres(genre):
     return genre_map[genre]
 
-def genre_similarities_value(genres_a, genres_b):
-    # SuperGenre Similarity
-    supergenres_a = set()
-    for genre_a in genres_a:
-        supergenres_a.update(set(genre_map[genre_a]))
-
-    supergenres_b = set()
-    for genre_b in genres_b:
-        supergenres_b.update(set(genre_map[genre_b]))
-
-    shared = len(supergenres_a & supergenres_b)
-    union = len(supergenres_a | supergenres_b)
-
-    jaccard = shared / union
-
-    genre_score = jaccard + len(genres_a & genres_b)
-
-    return round(genre_score, 1)
+def get_macrogenres_for_set(genres):
+    supergenres = set()
+    for genre in genres:
+        supergenres.update(set(genre_map[genre]))
+    return supergenres

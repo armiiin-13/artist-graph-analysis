@@ -14,10 +14,10 @@ def networkx_graph():
 
     # Add nodes
     for node in nodes:
-        G.add_node(node.name, color=node.color)
+        G.add_node(node.name, color=node.color, genres=node.genres)
 
     for edge in edges:
-        G.add_edge(edge.node_1, edge.node_2, color=edge.color)
+        G.add_edge(edge.node_1, edge.node_2, color=edge.color, weight=edge.weight)
 
     return G
 
