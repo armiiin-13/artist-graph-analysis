@@ -2,6 +2,7 @@ from cdlib import algorithms
 from collections import Counter
 import networkx as nx
 from collections import defaultdict
+
 from src.graph.genre_utils import get_macrogenres_for_set
 
 def get_communities(graph):
@@ -43,6 +44,8 @@ def louvain_communities(graph):
         print(f"\nComunidad {i + 1} ({len(community)} artistas):")
         print(", ".join(sorted(community)))
 
+    return communities
+
 def leiden_communities(graph):
     communities = algorithms.leiden(graph, weights="weight")
 
@@ -52,6 +55,8 @@ def leiden_communities(graph):
     for i, community in enumerate(communities.communities):
         print(f"\nComunidad {i + 1} ({len(community)} artistas):")
         print(", ".join(sorted(community)))
+
+    return communities
 
 def DPclus_communities(graph):
     communities = algorithms.dpclus(
@@ -84,13 +89,7 @@ def DPclus_communities(graph):
         print(f"\nComunidad {i} ({len(community)} artistas):")
         print(", ".join(sorted(community)))
 
-    print("\nArtistas en varias comunidades:")
-    for artist, count in sorted(memberships.items()):
-        if count > 1:
-            print(f"{artist}: {count} comunidades")
-
-    print("\nArtistas sin comunidad:")
-    print(sorted(set(graph.nodes()) - set(memberships)))
+    return communities.communities
 
 def macrogenres_communities(graph):
     macro_communities = defaultdict(set)
